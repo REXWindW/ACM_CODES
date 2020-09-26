@@ -196,3 +196,4 @@ int main(){
 		}
 	}
 } 
+//洛谷 P3384 【模板】轻重链剖分 https://www.luogu.com.cn/problem/P3384

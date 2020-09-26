@@ -7,9 +7,9 @@
 #include<map>
 using namespace std;
 int cansel_sync=(ios::sync_with_stdio(0),cin.tie(0),0);
-
+#define log(x) (31-__builtin_clz(x))//谢谢hjt
 const int MAXN = 1e6+5;
-const int LOGN = log(MAXN)/log(2)+5; 
+constexpr int LOGN = log(MAXN)/log(2)+5;
 
 int z,m,n;
 int fa[MAXN],p[MAXN][LOGN];
@@ -99,3 +99,4 @@ int main(){
 		for(int i=1;i<=n;i++) e[i].clear();
 	}
 }
+//HDOJ4547 http://acm.hdu.edu.cn/showproblem.php?pid=4547

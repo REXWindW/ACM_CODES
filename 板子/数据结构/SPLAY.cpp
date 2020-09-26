@@ -148,3 +148,6 @@ int main(){
     }
     return 0;
 }
+//基本是抄的这个大爹的博客https://www.cnblogs.com/cjyyb/p/7499020.html
+//再自己加了一点注解
+//全部代码https://paste.ubuntu.com/p/gH5mWpz669/

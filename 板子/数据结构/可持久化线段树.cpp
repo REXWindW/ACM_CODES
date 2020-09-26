@@ -64,3 +64,7 @@ int main(){
 		cout<<b[t]<<endl;//输出对应的原值
 	} 
 }
+//洛谷P3834 【模板】可持久化线段树 2（主席树）
+//https://www.luogu.com.cn/problem/P3834
+//其实就是拿的大爹板子然后自己加了很多注释：
+//https://www.luogu.com.cn/blog/bestFy0731/solution-p3834
