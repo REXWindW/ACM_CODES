@@ -18,40 +18,32 @@ int cansel_sync=(ios::sync_with_stdio(0),cin.tie(0),0);
 #define cendl printf("\n")
 ll gcd(ll a,ll b){ while(b^=a^=b^=a%=b); return a; }
 //#define INF 0x7fffffff
-const int MAXN = 1e4+5;
-ll a[MAXN];
-ll sum;
-int n;
+const int MAXN = 1e6+5;
+
+ll a[MAXN],sum,pj;
+ll x[MAXN],y[MAXN],z[MAXN];
+int cnt,n;
+inline void insert(int xx,int yy,int zz){
+    x[cnt]=xx;y[cnt]=yy;z[cnt++]=zz;
+}
 void solve(){
     cin>>n;
-    sum = 0;
-    rep(i,1,n){
-        cin>>a[i];
-        sum+=a[i];
-    }
-    if(sum%n){cout<<-1<<endl;return;}
-    ll pj = sum/n;
+    cnt=sum=0;
+    rep(i,1,n){cin>>a[i];sum+=a[i];}
+    if(sum%n){cout<<-1<<endl; return ;}
+    pj = sum/n;
     rep(i,2,n){
-        if(a[i]>=i){
-            cout<<i<<' '<<1<<' '<<a[i]/i<<endl;
-            a[1] += a[i]-(a[i]%i);
-            a[i] = a[i]%i;
+        if(a[i]%i){
+            insert(1,i,i-a[i]%i);
         }
+        insert(i,1,(a[i]+i-1)/i);
     }
-    rep(i,2,n){
-        if(a[i]>pj){
-            cout<<1<<' '<<i<<' '<<i-a[i]<<endl;
-            cout<<i<<' '<<1<<' '<<1<<endl;
-            a[1]+=a[i];a[i] = 0;
-        }
-        }
-        rep(i,1,n){
-            if(a[i]!=pj){
-                cout<<1<<' '<<i<<' '<<pj-a[i]<<endl;
-            }
-        }
+    rep(i,2,n) insert(1,i,pj);
+    cout<<cnt<<endl;
+    rep(i,0,cnt-1){
+        cout<<x[i]<<' '<<y[i]<<' '<<z[i]<<endl;
+    }
 }
-
 int main(){
     int z;
     cin>>z;
