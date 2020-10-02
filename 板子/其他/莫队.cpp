@@ -14,6 +14,8 @@ struct Q{
     int l,r,k;//k记录原来的编号
     friend bool operator < (Q x,Q y){//同一个分块内r小的排前面;不同分块则按分块靠前的
         return pos[x.l]==pos[y.l]?x.r<y.r:pos[x.l]<pos[y.l];
+        //return (pos[a.l]^pos[b.l])?pos[a.l]<pos[b.l]:((pos[a.l]&1)?a.r<b.r:a.r>b.r);
+        //这条第一个和==是一样的,后面的是对于左端点在同一奇数块的区间，右端点按升序排列，反之降序
     }
 }q[MAXN];
 
