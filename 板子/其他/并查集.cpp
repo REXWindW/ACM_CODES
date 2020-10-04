@@ -23,8 +23,7 @@ int find(int x){//查询根操作，同时进行路径压缩
 //虽然路径压缩的操作会对树高产生影响，导致rank的数值不准确，但这样还是能有效地提高运行效率的 
 
 void merge(int x,int y){
-	x=find(x);
-	y=find(y);
+	x=find(x);y=find(y);
 	if(x==y) return;///如果已经具有相同的祖先，则不进行合并操作
 	if(rank[x]<rank[y]) par[x]=y;//y树比x树高的情况，把x并为y的儿子节点 
 	else{//y比x高，或同高的情况下，把y并为x的儿子节点 
