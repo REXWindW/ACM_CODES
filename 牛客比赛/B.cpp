@@ -27,11 +27,11 @@ void clear(queue<vector<char>>& q) {
 }
 
 void qout(){
+    cout<<"wow"<<endl;
     vector<vector<char>> tmpp;
     while(!q.empty()){
         vector<char> tmp = q.front();
         tmpp.push_back(tmp);
-        cout<<tmp[0];
     }
     cout<<" (";
     rep(i,0,tmpp.size()-1){
@@ -43,8 +43,10 @@ void qout(){
 
 void work(){
     int siz = s.size();
+    cout<<siz<<endl;
     rep(i,0,siz-1){
         cout<<'['<<i<<']'<<endl;
+        cout<<q.size()<<endl;
         //cout<<i<<endl;
         if(isupper(s[i])){//统计大小写
             vector<char> tmp;
@@ -52,9 +54,11 @@ void work(){
             i++;
             while(i<siz&&islower(s[i])){
                 tmp.push_back(s[i]);
+                i++;
             }
             //if(tmp.size()==1)//单个大写情况
             if(i==siz){//到行末尾情况
+                cout<<"reach the end"<<endl;
                 q.push(tmp);
                 if(q.size()>1) qout();
                 else rep(i,0,tmp.size()-1) cout<<tmp[i];
@@ -80,11 +84,21 @@ void work(){
                 clear(q);
                 rep(i,0,tmp.size()-1) cout<<tmp[i];
             }
-            cout<<s[i];
         }
-        else cout<<s[i];
+        cout<<s[i];
         i++;
     }
+    if(!q.empty()){
+        if(q.size()>1){
+            qout();
+        }
+        else{
+            cout<<"check"<<endl;
+            vector<char> tmp = q.front();
+            rep(i,0,tmp.size()-1) cout<<tmp[i];
+        }
+    }
+    clear(q);
 }
 int main(){
 	while(getline(cin,s)){
