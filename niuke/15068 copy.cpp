@@ -38,12 +38,10 @@ int main(){
         }
         ll p1,p2,gcdd;
         Exgcd(nowm,m[i],gcdd,p1,p2);
-        ll bs = (c[i]-nowc)/gcdd;//算倍数,之后乘上去
-        ll prem = nowm;
-        nowm = lcm(m[i],nowm);//合并后模数为lcm
-        nowc = (((bs%nowm)*p1%nowm)*prem)%nowm+nowc;//算合并后余数
-        //bs*p1*prem+nowc;
-        nowc = ((nowc%nowm)+nowm)%nowm;
+        p1 = (p1%m[i]+m[i])%m[i];//exgcd求多组解，找到一个正数解p1
+        nowc = ((c[i]-nowc)/gcdd*p1%(m[i]/gcdd))*nowm%(m[i]/gcdd*nowm) + nowc;
+        nowc = (nowc%(m[i]/gcdd*nowm)+(m[i]/gcdd*nowm))%(m[i]/gcdd*nowm);//变成正数
+        nowm = m[i]/gcdd*nowm;
     }
     if(!flag) cout<<-1<<endl;
     else cout<<nowc<<endl;
