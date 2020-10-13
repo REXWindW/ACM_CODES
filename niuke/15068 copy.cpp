@@ -42,6 +42,7 @@ int main(){
         nowc = ((c[i]-nowc)/gcdd*p1%(m[i]/gcdd))*nowm%(m[i]/gcdd*nowm) + nowc;
         nowc = (nowc%(m[i]/gcdd*nowm)+(m[i]/gcdd*nowm))%(m[i]/gcdd*nowm);//变成正数
         nowm = m[i]/gcdd*nowm;
+        cout<<"check"<<nowc<<' '<<nowm<<endl;
     }
     if(!flag) cout<<-1<<endl;
     else cout<<nowc<<endl;
