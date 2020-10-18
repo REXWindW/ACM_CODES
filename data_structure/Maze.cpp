@@ -42,6 +42,23 @@ public:
         return *head;
     }
 };
+void outps(Stack &stk){//结尾输出路径 
+	Stack tmp;
+	Node hc; 
+	while(!stk.empty()){
+		hc = stk.top();
+		stk.pop();
+		tmp.push(hc.x,hc.y,hc.fx);
+	}
+	hc = tmp.top();
+	tmp.pop();
+	cout<<'('<<hc.x<<','<<hc.y<<')';
+	while(!tmp.empty()){
+		hc = tmp.top();
+		tmp.pop();
+		cout<<"->"<<'('<<hc.x<<','<<hc.y<<')';
+	}
+} 
 int dir[4][2] = {-1,0,1,0,0,-1,0,1};//方向数组
 const int MAXNN = 72;//定义迷宫大小
 int MAXN;
@@ -170,9 +187,14 @@ void dfs(int sx,int sy,int tx,int ty){//使用堆栈实现的深度优先搜索
 		Sleep(shuaxintime);
 		system("cls");
 		maze_path();
+		cout<<endl;
 		cout<<"■现在位置:("<<x<<','<<y<<")"<<endl;
 		if(x==tx&&y==ty){
-			cout<<"■找到终点"<<endl; 
+			cout<<"■找到终点"<<endl;
+			cout<<"■一共有 1 条路径:"<<endl; 
+			cout<<"■路径 1 :"<<endl;
+			outps(st);
+			cout<<endl;
 			break;
 		}
 		if(st.top().fx==0){//回溯
@@ -206,7 +228,7 @@ int main(){
 	if(hc=='Y'||hc=='y'){
 		system("cls");
 		print_maze();//打印迷宫 
-		cout<<"■如果是20左右,推荐100,如果迷宫比较大,因为打印迷宫也需要时间,可以设置间隔为0"<<endl;
+		cout<<"■如果是20左右,推荐50,如果迷宫比较大,因为打印迷宫也需要时间,可以设置间隔为0"<<endl;
 		cout<<"□输入搜索间隔(单位ms):";
 		cin>>shuaxintime;
 		dfs(2,1,MAXN-2,MAXN-1);//开始搜索
