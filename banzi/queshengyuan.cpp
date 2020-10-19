@@ -14,8 +14,13 @@ int cansel_sync=(ios::sync_with_stdio(0),cin.tie(0),0);
 #define ull unsigned long long
 #define rep(i,a,b) for(int i=(a);i<=(b);i++)
 #define repb(i,a,b) for(int i=(a);i>=b;i--)
+#define mkp make_pair
+#define ft first
+#define sd second
 #define log(x) (31-__builtin_clz(x))
 #define INF 0x3f3f3f3f
+typedef pair<int,int> pii;
+typedef pair<ll,ll> pll;
 ll gcd(ll a,ll b){ while(b^=a^=b^=a%=b); return a; }
 //#define INF 0x7fffffff
 
