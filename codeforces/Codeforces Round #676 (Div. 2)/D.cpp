@@ -37,9 +37,6 @@ void solve(){
 	rep(i,0,5){//最短路思想
 		if(cd(i-1)+cd(i+1)<cd(i)) c[i] = cd(i-1)+cd(i+1);
 	}
-	rep(i,0,5){//最短路思想
-		if(cd(i-1)+cd(i+1)<cd(i)) c[i] = cd(i-1)+cd(i+1);
-	}
 	ll minn = 1LL<<62;
 	//我懂了，最多只需要两种方向。
 	//先把tx弄到相同的方案
