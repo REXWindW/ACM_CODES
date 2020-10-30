@@ -1,17 +1,19 @@
-#include<bits/stdc++.h>
+#include<iostream>
 using namespace std;
-bool com(int a,int b)
-{
-	return a>b;//不写比较函数就  默认升序  ，写的话就必须写a>b,可以理解为前一个元素大于后一个元素，为降序形式 
+#define rep(i,a,b) for(int i=(a);i<=(b);i++)
+#define ll long long
+inline ll gcd(ll a,ll b){while(b^=a^=b^=a%=b);return a;}
+//这里其实是位运算实现的辗转相除法求最大公因数
+ll a,b,c,d;
+void solve(){
+	cin>>a>>b>>c>>d;
+	ll fz = a*c;
+	ll fm = b*d;
+	ll gcdd = gcd(fz,fm);//求分子和分母的最大公因数
+	cout<<fz/gcdd<<' '<<fm/gcdd<<endl;
 }
-int main ()
-{
-	int a[11]={9,8,77,67,93,2,5,7,3,1};
-	int i;
-	sort(a,a+10,com);
-	for(i=0;i<10;i++)
-	{
-		printf("%d ",a[i]);
-	}
-	return 0;
+int main(){
+	int z;
+	cin>>z;
+	while(z--) solve();
 }
