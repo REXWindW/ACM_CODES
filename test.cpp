@@ -1,19 +1,38 @@
-#include<iostream>
-using namespace std;
-#define rep(i,a,b) for(int i=(a);i<=(b);i++)
-#define ll long long
-inline ll gcd(ll a,ll b){while(b^=a^=b^=a%=b);return a;}
-//这里其实是位运算实现的辗转相除法求最大公因数
-ll a,b,c,d;
-void solve(){
-	cin>>a>>b>>c>>d;
-	ll fz = a*c;
-	ll fm = b*d;
-	ll gcdd = gcd(fz,fm);//求分子和分母的最大公因数
-	cout<<fz/gcdd<<' '<<fm/gcdd<<endl;
-}
-int main(){
-	int z;
-	cin>>z;
-	while(z--) solve();
+#include<bits/stdc++.h>
+char c[60],b[100000];
+int main()
+{
+	int n,i,sign=0;
+	while(~scanf("%d",&n))
+	{
+		gets(c);
+		for(i=0;i<n;++i)
+		{
+			if(c[0]>'a'&&c[0]<'z'||c[0]=='_')
+			{
+				++sign;
+				goto l;
+			}
+			else
+			{
+				printf("no\n");
+				goto end;
+			}
+			l:for(i=0;c[i]!='\0';++i)
+			{
+				if(c[i]>'0'&&c[i]<'9'||c[i]>'a'&&c[i]<'z'||c[i]=='_')
+				{
+				continue;
+				}
+				else
+				{
+				printf("no\n");
+				goto end;
+				}
+				 printf("yes\n");
+			end:;		
+			}
+		}
+	}
+	return 0;
 }
