@@ -6,7 +6,7 @@ using namespace std;
 int cansel_sync=(ios::sync_with_stdio(0),cin.tie(0),0);
 #define rep(i,a,b) for(int i=(a);i<=(b);i++)
 
-const int MAXN = 1e6+5;
+const int MAXN = 1e5+5;
 int jdbh[MAXN];//记录第i个模式串对应的节点编号
 int cntcx[MAXN];//记录第i个模式串出现的次数
 inline int idx(char c){return c-'a';}
@@ -21,7 +21,7 @@ int n,cntt;//cntt记录总点数
 string s,ms[166];
 int maxx;
 queue<int>q;
-void insert(string &s,int num){
+inline void insert(string &s,int num){
     int siz = s.size(),v,u=1;
     rep(i,0,siz-1){
         v = idx(s[i]);
@@ -33,7 +33,7 @@ void insert(string &s,int num){
     cntcx[num] = 0;
     jdbh[num] = u;//记录当前单词对应的节点编号
 }
-void getfail(){
+inline void getfail(){
     rep(i,0,25) trie[0].son[i] = 1;
     trie[0].flag = 0;
     q.push(1);
@@ -62,10 +62,10 @@ inline void query(string &s){
             }
             k = trie[k].fail;//跳fail
         }
-        u = trie[u].son[v];
+        u = trie[u].son[v];//这一句其实也有跳fail的功能，很精妙
     }
 }
-void solve(){
+inline void solve(){
     cntt = 1;
     trie[0].clr();
     trie[1].clr();
