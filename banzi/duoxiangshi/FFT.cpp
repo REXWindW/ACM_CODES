@@ -28,9 +28,11 @@ void FFT(int limit,cplx *a,int type){//limit记录项数
     cplx Wn(cos(2*Pi/limit),type*sin(2*Pi/limit));//单位根
     //这里type挺重要的,反变换的时候用-1,因为是-k
     cplx w(1,0);//一会儿算单位根幂的时候用w存
+    cplx tmp;
     for(int i=0;i<(limit>>1);i++,w=w*Wn){//w相当于公式中的w_n^k
-        a[i]=a1[i]+w*a2[i];//偶
-        a[i+(limit>>1)]=a1[i]-w*a2[i];//O(1)算另外一部分
+        tmp = w*a2[i];//蝴蝶操作
+        a[i]=a1[i]+tmp;//偶
+        a[i+(limit>>1)]=a1[i]-tmp;//O(1)算另外一部分
     }
 }
 int main(){
