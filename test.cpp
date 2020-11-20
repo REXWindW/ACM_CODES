@@ -1,55 +1,85 @@
 #include<iostream>
+#include<vector>
 #include<cstring>
 #include<cstdio>
-#include<algorithm>
-#include<vector>
-#include<map>
-#include<queue>
-#include<cmath>
 using namespace std;
-
-template<class T>inline void read(T &x){x=0;char o,f=1;while(o=getchar(),o<48)if(o==45)f=-f;do x=(x<<3)+(x<<1)+(o^48);while(o=getchar(),o>47);x*=f;}
-int cansel_sync=(ios::sync_with_stdio(0),cin.tie(0),0);
-#define ll long long
-#define ull unsigned long long
-#define rep(i,a,b) for(int i=(a);i<=(b);i++)
-#define repb(i,a,b) for(int i=(a);i>=b;i--)
-#define mkp make_pair
-#define ft first
-#define sd second
-#define log(x) (31-__builtin_clz(x))
-#define INF 0x3f3f3f3f
-const int MAXN = 3e4+5;
-#define int ll
-int a[MAXN];
-int cnt[MAXN];
-int cntf[MAXN];
-int n;
-void solve(){
-	memset(cnt,0,sizeof(cnt));
-	memset(cntf,0,sizeof(cntf));
-	cin>>n;
-	rep(i,1,n){
-		cin>>a[i];
-	}
-	ll res = 0;
-	if(2*a[2]-a[1]>=0) cnt[2*a[2]-a[1]]++;
-	else cntf[-(2*a[2]-a[1])]++;
-	rep(i,3,n){
-		if(a[i]>=0) res+=cnt[a[i]];
-		else res+=cntf[-a[i]];
-		rep(j,1,i-1){
-			int kk = 2*a[i]-a[j];
-			if(kk>=0) cnt[kk]++;
-			else cntf[-kk]++;
-		}
-	}
-	cout<<res<<endl;
+typedef long long ll;
+typedef unsigned long long ull;
+const int mod= 998244353;
+const int _G=3;
+const int maxn=1010000;
+#define clr(f,n) memset(f,0,sizeof(int)*(n))
+#define cpy(f,g,n) memcpy(f,g,sizeof(int)*(n))
+template<class T>inline void rd(T &x){
+   x=0;char o,f=1;
+   while(o=getchar(),o<48)if(o==45)f=-f;
+   do x=(x<<3)+(x<<1)+(o^48);
+   while(o=getchar(),o>47);
+   x*=f;
 }
-
-signed main(){
-	int z;
-	cin>>z;
-	while(z--) solve();
-
+ll powmod(ll a,ll t=mod-2){
+  ll ans=1;
+  while(t){
+    if(t&1)ans=ans*a%mod;
+    a=a*a%mod;t>>=1;
+  }return ans;
+}
+const int invG=powmod(_G);
+int tr[maxn<<1],tf;
+void tpre(int n){
+  if (tf==n)return;
+  tf=n;
+  for(int i=0;i<n;i++)
+    tr[i]=(tr[i>>1]>>1)|((i&1)?n>>1:0);
+}
+void NTT(ll *g,bool op,int n)
+{
+  tpre(n);
+  static ull f[maxn<<1],w[maxn<<1]={1};
+  for (int i=0;i<n;i++)f[i]=(((ll)mod<<5)+g[tr[i]])%mod;
+  for(int l=1;l<n;l<<=1){
+    ull tG=powmod(op?_G:invG,(mod-1)/(l+l));
+    for (int i=1;i<l;i++)w[i]=w[i-1]*tG%mod;
+    for(int k=0;k<n;k+=l+l)
+      for(int p=0;p<l;p++){
+        ll tt=w[p]*f[k|l|p]%mod;
+        f[k|l|p]=f[k|p]+mod-tt;
+        f[k|p]+=tt;
+      }      
+    if (l==(1<<10))
+      for (int i=0;i<n;i++)f[i]%=mod;
+  }if (!op){
+    ull invn=powmod(n);
+    for(int i=0;i<n;++i)
+      g[i]=f[i]%mod*invn%mod;
+  }else for(int i=0;i<n;++i)g[i]=f[i]%mod;
+}
+void px(ll *f,ll *g,int n)
+{for(int i=0;i<n;++i)f[i]=1ll*f[i]*g[i]%mod;}
+ll _g1[maxn<<1];
+#define sav _g1
+void times(ll *f,ll *g,int len,int lim)
+{
+  int n=1;
+  for(n=1;n<len+len;n<<=1)
+    ;
+  cpy(sav,g,n);
+  for(int i=len;i<n;i++)sav[i]=0;
+  NTT(f,1,n);NTT(sav,1,n);
+  px(f,sav,n);NTT(f,0,n);
+  for(int i=lim;i<n;++i)f[i]=0;
+  clr(sav,n);
+}
+ll a[1100000],b[1100000];
+int main(){
+    //freopen("in.txt", "r", stdin);
+    int n,m;
+    rd(n),rd(m);
+    for(int i=0;i<=n;i++)
+        rd(a[i]);
+    for(int i=0;i<=m;i++)
+        rd(b[i]);
+    times(a,b,n+m,n+m+1);
+    for(int i=0;i<=n+m;i++)      
+        printf("%lld ",a[i]);
 }
