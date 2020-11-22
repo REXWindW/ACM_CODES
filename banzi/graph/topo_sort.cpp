@@ -17,51 +17,45 @@ int cansel_sync=(ios::sync_with_stdio(0),cin.tie(0),0);
 #define cendl printf("\n")
 ll gcd(ll a,ll b){ while(b^=a^=b^=a%=b); return a; }
 //#define INF 0x7fffffff
-#define LINF 1ll<<60
-const int MAXN = 2e5+10;
-typedef pair<int,ll> pli;
-vector<pli> e[MAXN];//first是目标的点，second是距离dis 
-bool vis[MAXN];
-ll d[MAXN];
-int n,m,s,t;
 
-void dijkstra(){
-	rep(i,1,n){
-		d[i] = LINF;
-		vis[i] = 0;
+const int MAXN = 110;
+
+vector<int> e[MAXN];
+int n,m;
+int indg[MAXN];
+
+void solve(){
+	for(int i=1;i<=n;i++) {indg[i]=0;e[i].clear();}
+	for(int i=1,u,v;i<=m;i++){
+		cin>>u>>v;
+		e[u].push_back(v);
+		indg[v]++;
 	}
-	d[s] = 0;
-	priority_queue< pli,vector<pli>,greater<pli> >q;//first存d[x],second存x的编号 
-	q.push(make_pair(0,s));
-	while(!q.empty()){//进行类似bfs的操作 
-		int now = q.top().second;
+	queue<int> q;
+	for(int i=1;i<=n;i++)
+		if(indg[i]==0) q.push(i);//找到入度为0的点
+	vector<int> res;//储存结果的向量
+	int u;
+	while(!q.empty()){//BFS
+		u = q.front();
 		q.pop();
-		if(vis[now])continue;//可以看到下面的操作是都先推进去的，所以可能重复遇到now点 
-		vis[now] = 1;
-		int siz = e[now].size();
-		for(auto x:e[now]){//遍历now的所有边 
-			int v = x.second;//到达的点
-			if(d[v]>d[now]+x.first){
-				d[v] = d[now] + x.first;
-				q.push(make_pair(d[v],v));//推入优先队列 
-			} 
+		res.push_back(u);
+		for(auto v:e[u]){
+			if(--indg[v]==0)q.push(v);
+			//删掉当前点u，点v的入度--
+			//这一步的目的是找到新的入度为0的节点，推入队列Q
 		}
+	}
+	if(res.size()==n){//如果这个图无环的话，说明可以进行拓扑排序
+		for(int i=0;i<n;i++){//输出结果
+			cout<<res[i]<<' ';
+		}
+		cout<<endl;
 	}
 }
 
 int main(){
-	cin>>n>>m>>s;
-	int u,v;
-	ll dis;
-	rep(i,1,m){
-		cin>>u>>v>>dis;
-		e[u].push_back(make_pair(dis,v));
-		//e[v].push_back(make_pair(u,dis));//双向通行的情况 
-	}
-	dijkstra();
-	rep(i,1,n){
-		cout<<d[i];//输出到各个点的最短路径 
-		if(i!=n) cout<<' ';
-	}
-} 
-//Uva10305 https://vjudge.net/problem/UVA-10305
+	while(cin>>n>>m&&!(n==0&&m==0)) solve();
+}
+//Uva10305
+//https://vjudge.net/problem/UVA-10305

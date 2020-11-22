@@ -1,85 +1,96 @@
 #include<iostream>
-#include<vector>
 #include<cstring>
 #include<cstdio>
+#include<algorithm>
+#include<vector>
+#include<map>
+#include<queue>
+#include<cmath>
 using namespace std;
-typedef long long ll;
-typedef unsigned long long ull;
-const int mod= 998244353;
-const int _G=3;
-const int maxn=1010000;
-#define clr(f,n) memset(f,0,sizeof(int)*(n))
-#define cpy(f,g,n) memcpy(f,g,sizeof(int)*(n))
-template<class T>inline void rd(T &x){
-   x=0;char o,f=1;
-   while(o=getchar(),o<48)if(o==45)f=-f;
-   do x=(x<<3)+(x<<1)+(o^48);
-   while(o=getchar(),o>47);
-   x*=f;
+
+template<class T>inline void read(T &x){x=0;char o,f=1;while(o=getchar(),o<48)if(o==45)f=-f;do x=(x<<3)+(x<<1)+(o^48);while(o=getchar(),o>47);x*=f;}
+int cansel_sync=(ios::sync_with_stdio(0),cin.tie(0),0);
+#define ll long long
+#define ull unsigned long long
+#define rep(i,a,b) for(int i=(a);i<=(b);i++)
+#define repb(i,a,b) for(int i=(a);i>=b;i--)
+#define mkp make_pair
+#define ft first
+#define sd second
+#define log(x) (31-__builtin_clz(x))
+#define INF 0x3f3f3f3f
+typedef pair<int,int> pii;
+typedef pair<ll,ll> pll;
+ll gcd(ll a,ll b){ while(b^=a^=b^=a%=b); return a; }
+//#define INF 0x7fffffff
+const int med = 998244353;
+ll tot[4];
+bool fr[4],fr2[4];
+bool bk[4],bk2[4];
+int n,a,b;
+string sa,sb;
+void solve(){
+  cin>>n>>a>>b;
+  cin>>sa>>sb;
+  rep(i,1,3){
+    fr[i] = bk[i] = bk2[i] = fr2[i] = 0;
+    tot[i] = 0;
+  }
+  rep(i,2,a-1){
+    if(sa[i-2]=='1'&&sa[i-1]=='1'&&sa[i]=='1') tot[1]++;
+  }
+  rep(i,2,b-1){
+    if(sb[i-2]=='1'&&sb[i-1]=='1'&&sb[i]=='1') tot[2]++;
+  }
+  if(sa[0]=='1') fr[1] = 1;
+  if(fr[1]&&sa[1]=='1') fr2[1] = 1;
+  if(sb[0]=='1') fr[2] = 1;
+  if(fr[2]&&sb[1]=='1') fr2[2] = 1;
+  if(sa[a-1]=='1') bk[1] = 1;
+  if(bk[1]&&sa[a-2]=='1') bk2[1] = 1;
+  if(sb[b-1]=='1') bk[2] = 1;
+  if(bk[2]&&sb[b-2]=='1') bk2[2] = 1;
+  rep(i,3,n){
+    fr[3] = fr[1];
+    bk[3] = bk[2];
+    fr2[3] = fr2[1];
+    bk2[3] = bk2[2];
+    if(i==3){
+      if(a==1&&fr[1]&&fr[2]){
+        fr2[3] = 1;
+      }
+      if(b==1&&bk[1]&&bk[2]){
+        bk2[3] = 1;
+      }
+    }
+    else if(i==4){
+      if(b==1&&fr[1]&&fr[2]){
+        fr2[3] = 1;
+      }
+    }
+    //tepan
+    tot[3] = tot[2]+tot[1];
+    //cout<<"tmpchk"<<tot[3]<<endl;
+    if(bk2[1]&&fr2[2]) tot[3]+=2;
+    else if( (bk2[1]&&fr[2]) || (bk[1]&&fr2[2]) ) tot[3]+=1;
+    tot[3]%=med;
+
+    //cout<<"check"<<i<<':'<<endl;
+    //cout<<tot[3]<<' '<<fr2[3]<<' '<<bk2[3]<<endl;//debug
+
+    tot[1] = tot[2];
+    fr[1]=fr[2],fr2[1]=fr2[2];
+    bk[1]=bk[2],bk2[1]=bk2[2];
+
+    tot[2] = tot[3];
+    fr[2]=fr[3],fr2[2]=fr2[3];
+    bk[2]=bk[3],bk2[2]=bk2[3];
+  }
+  cout<<tot[2]<<endl;
 }
-ll powmod(ll a,ll t=mod-2){
-  ll ans=1;
-  while(t){
-    if(t&1)ans=ans*a%mod;
-    a=a*a%mod;t>>=1;
-  }return ans;
-}
-const int invG=powmod(_G);
-int tr[maxn<<1],tf;
-void tpre(int n){
-  if (tf==n)return;
-  tf=n;
-  for(int i=0;i<n;i++)
-    tr[i]=(tr[i>>1]>>1)|((i&1)?n>>1:0);
-}
-void NTT(ll *g,bool op,int n)
-{
-  tpre(n);
-  static ull f[maxn<<1],w[maxn<<1]={1};
-  for (int i=0;i<n;i++)f[i]=(((ll)mod<<5)+g[tr[i]])%mod;
-  for(int l=1;l<n;l<<=1){
-    ull tG=powmod(op?_G:invG,(mod-1)/(l+l));
-    for (int i=1;i<l;i++)w[i]=w[i-1]*tG%mod;
-    for(int k=0;k<n;k+=l+l)
-      for(int p=0;p<l;p++){
-        ll tt=w[p]*f[k|l|p]%mod;
-        f[k|l|p]=f[k|p]+mod-tt;
-        f[k|p]+=tt;
-      }      
-    if (l==(1<<10))
-      for (int i=0;i<n;i++)f[i]%=mod;
-  }if (!op){
-    ull invn=powmod(n);
-    for(int i=0;i<n;++i)
-      g[i]=f[i]%mod*invn%mod;
-  }else for(int i=0;i<n;++i)g[i]=f[i]%mod;
-}
-void px(ll *f,ll *g,int n)
-{for(int i=0;i<n;++i)f[i]=1ll*f[i]*g[i]%mod;}
-ll _g1[maxn<<1];
-#define sav _g1
-void times(ll *f,ll *g,int len,int lim)
-{
-  int n=1;
-  for(n=1;n<len+len;n<<=1)
-    ;
-  cpy(sav,g,n);
-  for(int i=len;i<n;i++)sav[i]=0;
-  NTT(f,1,n);NTT(sav,1,n);
-  px(f,sav,n);NTT(f,0,n);
-  for(int i=lim;i<n;++i)f[i]=0;
-  clr(sav,n);
-}
-ll a[1100000],b[1100000];
+
 int main(){
-    //freopen("in.txt", "r", stdin);
-    int n,m;
-    rd(n),rd(m);
-    for(int i=0;i<=n;i++)
-        rd(a[i]);
-    for(int i=0;i<=m;i++)
-        rd(b[i]);
-    times(a,b,n+m,n+m+1);
-    for(int i=0;i<=n+m;i++)      
-        printf("%lld ",a[i]);
+	int z;
+	cin>>z;
+	while(z--) solve();
 }
