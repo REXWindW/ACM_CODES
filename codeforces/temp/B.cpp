@@ -24,8 +24,29 @@ typedef pair<ll,ll> pll;
 ll gcd(ll a,ll b){ while(b^=a^=b^=a%=b); return a; }
 //#define INF 0x7fffffff
 
+string s;
+int n,m;
+const int MAXN = 666;
+int sum[2][MAXN];
 void solve(){
-	
+	cin>>n>>m;
+	cin>>s;
+	sum[0][0] = 0;
+	sum[1][0] = 0;
+	rep(i,0,n-1){//qzh
+		sum[1][i+1] = sum[1][i];
+		sum[0][i+1] = sum[0][i];
+		if(s[i]=='0') sum[0][i+1]++;
+		else sum[1][i+1]++;
+	}
+	int l,r;
+	while(m--){
+		cin>>l>>r;
+		int rs = s[r-1]-'0';
+		int ls = s[l-1]-'0';
+		if(sum[rs][n]-sum[rs][r]||sum[ls][l-1]) cout<<"YES"<<endl;
+		else cout<<"NO"<<endl;
+	}
 }
 
 int main(){
