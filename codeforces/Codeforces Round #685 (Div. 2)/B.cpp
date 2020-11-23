@@ -36,8 +36,7 @@ void solve(){
 	rep(i,0,n-1){//qzh
 		sum[1][i+1] = sum[1][i];
 		sum[0][i+1] = sum[0][i];
-		if(s[i]=='0') sum[0][i+1]++;
-		else sum[1][i+1]++;
+		sum[s[i]-'0'][i+1]++;
 	}
 	int l,r;
 	while(m--){
