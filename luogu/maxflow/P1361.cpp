@@ -65,7 +65,6 @@ ll Maxflow(){
 	while(bfs()){
 		memset(cur,0,sizeof(cur));//因为有新的反向边引入，即"正向边"更新了 ,有些实际上是反,但dfs里面当正的用 
 		flow+=dfs(s,INF);//对当前阻塞流dfs； 
-		cout<<flow<<endl;
 	}
 	return flow;
 } 
@@ -78,12 +77,12 @@ void solve(){
     rep(i,1,n){
         cin>>tai;
         summ += tai;
-        add_edge(0,i,tai);
+        add_edge(s,i,tai);
     }
     rep(i,1,n){
         cin>>tbi;
         summ += tbi;
-        add_edge(i,3020,tbi);
+        add_edge(i,t,tbi);
     }
     cin>>m;//how many groups
     int tki,tca,tcb;//temp
@@ -92,22 +91,15 @@ void solve(){
         cin>>tki>>tca>>tcb;
         summ += tca+tcb;
         //n+m and 2n+m for two devide points
-        add_edge(1,n+i,tca);
-        add_edge(2*n+i,3020,tcb);
+        add_edge(s,n+i,tca);
+        add_edge(2*n+i,t,tcb);
         rep(j,1,tki){
             cin>>hc;
             add_edge(n+i,hc,INF);
-            add_edge(hc,n+m+i,INF);
+            add_edge(hc,2*n+i,INF);
         }
     }
-    cout<<summ<<endl;
-    cout<<Maxflow()<<endl;
-    //int sizz = edges.size();
-    //rep(i,0,sizz){
-    //    cout<<"check"<<endl;
-    //    cout<<edges[i].from<<' '<<edges[i].to<<endl;
-    //    cout<<edges[i].flow<<' '<<edges[i].cap<<endl;
-    //}
+    cout<<summ-Maxflow()<<endl;
 }
 int main(){
     solve();
