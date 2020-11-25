@@ -1,0 +1,29 @@
+//$0 为代码段生成后光标所在位置，$1 为占位符；
+{
+    "touwenjian_lite": {
+        "prefix": "rexwind2", //唤醒代码块的命令
+        "body": [
+			"#include<iostream>",
+			"#include<cstring>",
+			"#include<cstdio>",
+			"#include<algorithm>",
+			"using namespace std;",
+			"",
+			"int cansel_sync=(ios::sync_with_stdio(0),cin.tie(0),0);",
+			"#define ll long long",
+			"#define rep(i,a,b) for(int i=(a);i<=(b);i++)",
+			"#define INF 0x3f3f3f3f",
+			"",
+			"void solve(){",
+			"    $0",
+			"}",
+			"",
+			"int main(){",
+			"    int z;",
+			"    cin>>z;",
+			"    while(z--) solve();",
+			"}",
+        ], //代码块的主体
+        "description": "头文件简单版" //代码块的介绍
+    }
+}

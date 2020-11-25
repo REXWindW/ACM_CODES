@@ -1,0 +1,17 @@
+//$0 为代码段生成后光标所在位置，$1 为占位符；
+{
+    "quickpow": {
+        "prefix": "qpow", //唤醒代码块的命令
+        "body": [
+            "const int med = $0;",
+            "ll qpow(ll d,ll c){//快速幂",
+            "    ll res = 1;",
+            "    while(c){",
+            "        if(c&1) res=res*d%med;",
+            "        d=d*d%med;c>>=1;",
+            "    }return res;",
+            "}",
+        ], //代码块的主体
+        "description": "快速幂" //代码块的介绍
+    }
+}
