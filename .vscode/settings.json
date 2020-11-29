@@ -29,6 +29,8 @@
         "algorithm": "cpp",
         "queue": "cpp",
         "cstring": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "random": "cpp",
+        "string": "cpp"
     }, // 格式化时调整include的顺序（按字母排序）
 }
