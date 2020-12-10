@@ -12,9 +12,7 @@
 using namespace std;
 int cansel_sync=(ios::sync_with_stdio(0),cin.tie(0),0);
 #define ll long long
-#define int ll
 #define rep(i,a,b) for(int i=(a);i<=(b);i++)
-
 struct duan{
     int yx;//有效
     int st,ed;//起点终点
@@ -23,17 +21,12 @@ struct duan{
         else return a.yx==b.yx&&a.st<b.st;
     }
 };
-
-const int MAXM =2e5+5;
+const int MAXN = 1e5+5;
 set<duan> set1;
 set<int> set2;//存位置
-set<int>::iterator it2;//迭代器
-set<int>::iterator it22;//迭代器
-set<duan>::iterator it1;//迭代器
-int pos[MAXM];//存第x次操作的人的位置
+int pos[MAXN];//存第x次操作的人的位置
 int n,m;
-const int INF = 0x7fffffff;
-
+const int INF = 0x3f3f3f3f;
 void solve(){
     int typ,hc;
     set2.insert(0);set2.insert(n+1);//插两个假人
@@ -43,10 +36,9 @@ void solve(){
         duan now;
         int youxiao;//计算有效值
         if(typ==1){
-            it1 = set1.begin();
-            now = *it1;
+            now = *set1.begin();
             //cout<<now.yx<<' '<<now.st<<' '<<now.ed<<endl;
-            set1.erase(it1);//出队
+            set1.erase(now);//出队
             if(now.st==1){//特判开头,也能让最开始的优先插在1
                 pos[tim] = 1;
                 youxiao = (now.ed-now.st);
@@ -72,14 +64,14 @@ void solve(){
         else if(typ==2){
             cin>>hc;
             int tpos = pos[hc];//位置
-            it22 = set2.find(tpos);
-            int px = *it22;
-            set2.erase(it22);//擦除
-            it2 = set2.lower_bound(px);
-            it2--;
-            int pre = *(it2);//前驱
-            it2 = set2.upper_bound(px);
-            int nxt = *(it2);//后继
+            int px = *set2.find(tpos);
+            set<int>::iterator it;//迭代器
+            it = set2.lower_bound(px);
+            it--;
+            int pre = *(it);//前驱
+            it = set2.upper_bound(px);
+            int nxt = *(it);//后继
+            set2.erase(px);//擦除
             //删除左边
             if(pre==0) youxiao = px-pre-1;
             else youxiao = (px-pre+1)/2;
@@ -93,15 +85,10 @@ void solve(){
             else if(pre==0||nxt==n+1) youxiao = nxt-pre-1;
             else youxiao = (nxt-pre+1)/2;
             set1.insert(duan{youxiao,pre+1,nxt-1});
-            //cout<<"find px"<<px<<"pre"<<pre<<"nxt"<<nxt<<endl;
-            //cout<<"insert new"<<youxiao<<' '<<pre+1<<' '<<nxt-1<<endl;
         }
         //cout<<"check1"<<set1.size()<<endl;
     }
 }
-
-signed main(){
-    //freopen("in.txt","r",stdin);
-    //freopen("out.txt","w",stdout);
+int main(){
     while(cin>>n>>m) solve();
 }
