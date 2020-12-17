@@ -52,11 +52,9 @@ void solve(){
         while(l<r){
             mid = (l+r)>>1;
             tmp = qry(i,mid);
-            //这里我一开始多写了个条件就是max2和tmp比较的,这个不能有
-            //因为扩的时候max2和tmp都可能下降，并不是往更接近的方向走
-            if(tmp>max1[i-1]||max1[i-1]<max2[mid+1])
+            if(tmp>max1[i-1]||max1[i-1]<max2[mid+1]||tmp<max2[mid+1])
                 l = mid+1;
-            else if(tmp<max1[i-1]||max1[i-1]>max2[mid+1])
+            else if(tmp<max1[i-1]||max1[i-1]>max2[mid+1]||tmp<max2[mid+1])
                 r = mid-1;
             else break;
         }
