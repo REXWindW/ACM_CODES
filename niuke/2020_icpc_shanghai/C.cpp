@@ -27,7 +27,7 @@ void solve(){
     double res = 0;
     //fjd以内都走弧，fjd+1以及往上都走半径2r
     rep(i,1,n){//n个同心圆，第i个半径i
-        res+=i;//往圆心的情况
+        if(m!=1)res+=i;//往圆心的情况
         rep(j,0,m-1){
             double hudu = j*fy*i;
             if(hudu<2*i){
