@@ -32,6 +32,7 @@
         "ostream": "cpp",
         "random": "cpp",
         "string": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "chrono": "cpp"
     }, // 格式化时调整include的顺序（按字母排序）
 }
