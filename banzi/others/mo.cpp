@@ -32,7 +32,7 @@ void Sub(int pos){
 int main(){
     cin>>n>>m>>k;//k为数字范围
     memset(cnt,0,sizeof(cnt));
-    int siz = sqrt(k);//每个分块的大小
+    int siz = sqrt(n);//每个分块的大小
     rep(i,1,n){
         cin>>a[i];
         pos[i] = i/siz;//分块
