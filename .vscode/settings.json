@@ -36,6 +36,7 @@
         "chrono": "cpp",
         "complex": "cpp",
         "limits": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "*.tcc": "cpp"
     }, // 格式化时调整include的顺序（按字母排序）
 }
