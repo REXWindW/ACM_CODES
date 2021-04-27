@@ -37,6 +37,7 @@
         "complex": "cpp",
         "limits": "cpp",
         "valarray": "cpp",
-        "*.tcc": "cpp"
+        "*.tcc": "cpp",
+        "set": "cpp"
     }, // 格式化时调整include的顺序（按字母排序）
 }
